@@ -1,0 +1,94 @@
+input{
+  color: black;
+}
+.img-user{
+	opacity: 0.8;
+	border: 1px solid white;
+}
+.img-user:hover{
+	opacity: 1;
+	cursor: pointer;
+}
+
+
+select{
+	color: rgb(121, 121, 121);
+}
+
+.formAddPhoto td{
+	padding: 10px;
+}
+#filtreAlbum{
+	margin-bottom: 30px;
+}
+.allAlbums{
+	display: none;
+}
+.allAlbums img{
+	margin:5px;
+}
+
+.albumActif{
+	display: block;
+}
+
+h4{
+	color: rgb(92, 92, 92);
+	text-shadow: none; 
+}
+
+
+/* styles de base si JS est activé */
+.js .input-file-container {
+  position: relative;
+  width: 225px;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.js .input-file-trigger {
+  display: block;
+  padding: 14px 45px;
+  background: #337ab7;
+  color: #fff;
+  font-size: 1em;
+  transition: all .4s;
+  cursor: pointer;
+}
+.js .input-file {
+  position: absolute;
+  top: 0; left: 0;
+  width: 225px;
+  padding: 14px 0;
+  opacity: 0;
+  cursor: pointer;
+}
+ 
+/* quelques styles d'interactions */
+.js .input-file:hover + .input-file-trigger,
+.js .input-file:focus + .input-file-trigger,
+.js .input-file-trigger:hover,
+.js .input-file-trigger:focus {
+  background: #34495E;
+}
+ 
+/* styles du retour visuel */
+.file-return {
+  margin: 0;
+}
+.file-return:not(:empty) {
+  margin: 1em 0;
+}
+.js .file-return {
+  font-style: italic;
+  font-size: .9em;
+  font-weight: bold;
+  color: rgb(92, 92, 92);
+}
+/* on complète l'information d'un contenu textuel
+   uniquement lorsque le paragraphe n'est pas vide */
+.js .file-return:not(:empty):before {
+  content: "Votre fichier: ";
+  font-style: normal;
+  font-weight: normal;
+}
