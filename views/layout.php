@@ -32,14 +32,14 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">Facebook</h3>
+              <h3 class="masthead-brand">Paypal</h3>
               <nav>
 
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="/">Accueil</a></li>
-                  <li><a href="/vote">Voter</a></li>
-                  <li><a href="/play">S'inscrire</a></li>
-                  <li><a href="#">Nous contacter</a></li>
+                  <li><a href="/payment">Simuler un paiement</a></li>
+<!--                  <li><a href="/play">S'inscrire</a></li>-->
+<!--                  <li><a href="#">Nous contacter</a></li>-->
                 </ul>
               </nav>
             </div>
@@ -51,7 +51,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p><a href="#">Mentions légales</a>, par <a href="http://skrzypczyk.fr">Yves Skrzypczyk</a>.</p>
+              <p><a href="#">Mentions légales</a></p>
             </div>
           </div>
 
@@ -71,4 +71,3 @@
 
   </body>
 </html>
-<
