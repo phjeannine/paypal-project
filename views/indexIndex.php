@@ -1,2 +1,2 @@
-yves
-<?php print_r($mesargs);?>
+<?php
+print 'Accueil';

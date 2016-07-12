@@ -5,11 +5,5 @@ class indexController{
 
 		$v = new view("indexIndex");
 		$v->assign("mesargs", $args);
-	}	
-
-	public function contactAction($args){
-
-		
-	}	
-
+	}
 }
