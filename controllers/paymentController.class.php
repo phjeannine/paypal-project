@@ -2,43 +2,53 @@
 
 class paymentController
 {
+  //Function to show Index (for creating an object to buy)
   public function indexAction($args)
   {
     $v = new view("createIndex");
     $v->assign("mesargs", $args);
   }
 
+  //Create a PayPal Payment
   public function createAction($args)
   {
-    //product + price from the form
+    //product + price from the Index
     $price = $_POST['price'];
     $product = $_POST['name'];
     $currency = $_POST['currency'];
 
+    //Get the admin access token for creating an payment from PayPal
     $token = $this->accessToken();
 
+    //Create the PayPal payment
     $createPayment = $this->createPayment($token, $price, $product, $currency);
 
+    //Get the ID Payment in case of bugs or repaid
     $payID = $createPayment['id'];
+    //URL for redirecting the client
     $payURL = $createPayment['url'];
+    //ID Client just in case of bugs or saving in DB
     $clientID = $createPayment['clientID'];
 
+    //Redirecting the client there, return in payAction
     header('Location:' . $payURL);
   }
 
   public function payAction($args)
   {
-
+    //Put those in SESSION in case of bugs
     $_SESSION['paymentID'] = $_GET['paymentId'];
     $_SESSION['tokenClient'] = $_GET['token'];
     $_SESSION['$payerID'] = $_GET['PayerID'];
 
+    //ID Payment PayPal
     $paymentID = $_SESSION['paymentID'];
-    //Token Client si on veut géré les remboursements ou autre plus tard
     $tokenClient = $_SESSION['tokenClient'];
     $payerID = $_SESSION['$payerID'];
 
+    //Admin Token
     $token = $this->accessToken();
+    //Execute the pay
     $payment = $this->executePay($paymentID, $payerID, $token);
 
     if (isset ($payment)) {
@@ -58,7 +68,7 @@ class paymentController
   public function accessToken()
   {
     $ch = curl_init();
-
+    
     //
     // A REMPLIR AVEC VOS ID ! Trouvable sur paypal dev avec votre compte
     //
@@ -98,6 +108,7 @@ class paymentController
   {
     $ch = curl_init();
 
+    //JSON request
     $data = '{
 			"intent":"sale",
 			"redirect_urls":{
@@ -139,15 +150,17 @@ class paymentController
         "Authorization: Bearer " . $token)
     );
 
+    //Execute cURL, return JSON response from PayPal
     $result = curl_exec($ch);
 
     if (empty($result)) die("cURL error : Please check the data and curl setopt. Or PayPal is unreachable");
     else {
+      //Decoding in PHP the JSON Response
       $json = json_decode($result, true);
+      //State = response from PayPal, created = good, other = wrong
       if ($json['state'] == 'created') {
         $payID = ($json['id']);
         $payURL = ($json['links'][1]['href']);
-//			$clientID = preg_split('/[^=]+$/', $json['links'][1]['href']);
         $clientID = substr(strrchr($json['links'][1]['href'], "="), 1);
       }
       else {
@@ -156,6 +169,9 @@ class paymentController
       }
     }
     curl_close($ch);
+
+    //Return id, url, clientID for executing the pay just after that.
+    //Returning in function payAction
     return array(
       'id' => $payID,
       'url' => $payURL,
@@ -193,6 +209,7 @@ class paymentController
     else {
       $json = json_decode($result, true);
 
+      //Get the state, generally state = paid
       if (isset ($json['state'])) {
         $state = $json['state'];
       }
