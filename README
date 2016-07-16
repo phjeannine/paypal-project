@@ -1,0 +1,76 @@
+Module PayPal ESGI
+
+Qu'est ce que c'est ?
+---------------------
+
+Ce module permet de dialoguer avec le REST API de PayPal afin de généré un paiement PayPal
+pour qu'un client paye avec son compte PayPal.
+
+Où le trouver ?
+---------------
+
+Ce module et sa dernière version peut être récupéré sur le GitHub ici :
+https://github.com/phjeannine/paypal-project
+
+Contacts
+--------
+mr.chitai@gmail.com
+ph.jeannine@gmail.com
+amliebarre@gmail.com
+roubrerie@gmail.com
+
+Documentation
+-------------
+
+A faire en premier :
+Aller dans le fichier paymentController.class.php
+Dans la fonction accessToken, renseigner son propre $clientId et $secret trouvable dans votre compte sandbox Paypal
+dans votre application.
+
+
+Class principal :
+paymentController.class.php
+
+Ce controlleur permet de créer de A à Z un paiement PayPal en PHP natif en utilisant le REST API de PayPal.
+
+- indexAction
+Accède au formulaire pour simuler un produit à acheter
+
++++++++++++++++
+
+- createAction
+Génère l'access Token admin afin de dialoguer avec le REST API avec la fonction -accessToken-
+
+Crée un paiement avec createPayment en lui fournissant le Token Admin et les caractéristiques du produits avec
+la fonction -createPayment-
+
+Retourne l'ID du paiement créé par PayPal, le lien pour rediriger le client pour son paiement PayPal et un ID Client
+($payID, $payURL et $clientID)
+Redirige le client vers le lien d'interface de paiement PayPal
+
+Après paiement, le client est rediriger vers le lien de retour préalablement créé dans la fonction -createPayment-,
+ce qui redirige à la fonction -payAction-
+
++++++++++++++++
+
+- payAction
+Enregistre les tokens clients dans la session de l'utilisateurs, ce qui permettra de développer des fonctionnalités au site marchand
+
+Puis, execute le paiement avec la fonction executePay
+
+- executePay
+Effectue le paiement avec le compte PayPal de l'utilisateur grâce aux données retourné par la fonction précédente et le token Admin
+$paymentID, $payerID et $token
+
+Retourne le state de la commande, si state = approved, le paiement a été effectué, sinon error.
+
+- Fin de la fonction payAction en redirigeant vers un lien success ou fail
+
+Si le paiement a été effectué, execute la fonction -getPay- afin de récupérer les informations fourni par PayPal concernant
+le paiement. Comme l'addresse du client, son email, etc.
+Sinon, redirige vers une page d'erreur.
+
+
+
+
+

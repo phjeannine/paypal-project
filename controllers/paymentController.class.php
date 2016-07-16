@@ -30,18 +30,18 @@ class paymentController
     //ID Client just in case of bugs or saving in DB
     $clientID = $createPayment['clientID'];
 
-    //Redirecting the client there, return in payAction
+    //Redirecting the client there, return in payAction function
     header('Location:' . $payURL);
   }
 
   public function payAction($args)
   {
-    //Put those in SESSION in case of bugs
+    //Put those in SESSION in case of bugs or further actions
     $_SESSION['paymentID'] = $_GET['paymentId'];
     $_SESSION['tokenClient'] = $_GET['token'];
     $_SESSION['$payerID'] = $_GET['PayerID'];
 
-    //ID Payment PayPal
+    //ID PayPal Payment
     $paymentID = $_SESSION['paymentID'];
     $tokenClient = $_SESSION['tokenClient'];
     $payerID = $_SESSION['$payerID'];
@@ -68,9 +68,8 @@ class paymentController
   public function accessToken()
   {
     $ch = curl_init();
-    
     //
-    // A REMPLIR AVEC VOS ID ! Trouvable sur paypal dev avec votre compte
+    // A REMPLIR AVEC VOS ID ! Trouvable sur paypal dev avec votre compte sandbox
     //
 
     $clientId = "";
@@ -209,7 +208,7 @@ class paymentController
     else {
       $json = json_decode($result, true);
 
-      //Get the state, generally state = paid
+      //Get the state, generally state = approved
       if (isset ($json['state'])) {
         $state = $json['state'];
       }
@@ -274,7 +273,7 @@ class paymentController
 
   /**
    * @param $args
-   * Redirect when the state of the pay is successfull
+   * Redirect when the state of the pay is successful
    */
   public function successAction($args)
   {
